@@ -25,6 +25,30 @@ android {
     testInstrumentationRunner = AndroidClient.testRunner
   }
 
+  signingConfigs {
+    getByName("debug") {
+      keyAlias = "androiddebugkey"
+      keyPassword = "android"
+      storeFile = file("${rootDir.absolutePath}/debug.keystore")
+      storePassword = "android"
+    }
+    create("release") {
+      keyAlias = "androiddebugkey"
+      keyPassword = "android"
+      storeFile = file("${rootDir.absolutePath}/debug.keystore")
+      storePassword = "android"
+    }
+  }
+
+  buildTypes {
+    getByName("debug") {
+      signingConfig = signingConfigs.getByName("debug")
+    }
+    getByName("release") {
+      signingConfig = signingConfigs.getByName("release")
+    }
+  }
+
   sourceSets {
     map { it.java.srcDir("src/${it.name}/kotlin") }
 
